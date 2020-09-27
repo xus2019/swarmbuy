@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!--status用来指定log4j本身的打印日志的级别.-->
+<configuration status="WARN">      <!--configuration有两个子节点:Appenders和Loggers-->
+    <!--全局参数-->
+    <properties>
+        <property name="pattern">[inotee-swarmbuy] [%thread] [%T] %d{yyyy-MM-dd HH:mm:ss,SSS} [%-5p][%t] (%C:%L) - %m%n</property>
+        <property name="LOG_PATH">d:/logs</property>
+        <property name="auditLogPattern">%m%n</property>
+    </properties>
+
+    <!--
+    Appenders节点，常见的有三种子节点:Console、RollingFile、File.
+    -->
+    <appenders>
+            <!--Console节点用来定义输出到控制台的Appender.
+                    name:指定Appender的名字.
+                    target:SYSTEM_OUT 或 SYSTEM_ERR,一般只设置默认:SYSTEM_OUT.
+                    PatternLayout:输出格式，不设置默认为:%m%n.-->
+        <console name="CONSOLE" target="SYSTEM_OUT" follow="true">
+            <patternLayout>
+                <Pattern>${pattern}</Pattern>
+            </patternLayout>
+        </console>
+
+        <!--RollingFile节点用来定义超过指定大小自动删除旧的创建新的的Appender.
+                name:指定Appender的名字.
+                fileName:指定输出日志的目的文件带全路径的文件名.
+                PatternLayout:输出格式，不设置默认为:%m%n.
+                filePattern:指定新建日志文件的名称格式.
+                Policies:指定滚动日志的策略，就是什么时候进行新建日志文件输出日志.
+                TimeBasedTriggeringPolicy:Policies子节点，基于时间的滚动策略，interval属性用来指定多久滚动一次，默认是1 hour。modulate=true用来调整时间：比如现在是早上3am，interval是4，那么第一次滚动是在4am，接着是8am，12am...而不是7am.
+                SizeBasedTriggeringPolicy:Policies子节点，基于指定文件大小的滚动策略，size属性用来定义每个日志文件的大小.
+                DefaultRolloverStrategy:用来指定同一个文件夹下最多有几个日志文件时开始删除最旧的，创建新的(通过max属性)。-->
+        <rollingFile name="DEFAULT" fileName="${LOG_PATH}/swarmbuy_default.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/swarmbuy_default-%d{yyyy-MM-dd-HH}-%i.log">
+            <patternLayout>
+                <Pattern>${pattern}</Pattern>
+            </patternLayout>
+            <Policies>
+                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+        </rollingFile>
+
+        <rollingFile name="INFO" fileName="${LOG_PATH}/swarmbuy_info.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/swarmbuy_info-%d{yyyy-MM-dd-HH}-%i.log">
+            <patternLayout>
+                <Pattern>${pattern}</Pattern>
+            </patternLayout>
+            <Policies>
+                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+        </rollingFile>
+
+        <rollingFile name="ERROR" fileName="${LOG_PATH}/swarmbuy_error.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/swarmbuy_error-%d{yyyy-MM-dd-HH}-%i.log">
+            <patternLayout>
+                <Pattern>${pattern}</Pattern>
+            </patternLayout>
+            <Policies>
+                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+        </rollingFile>
+
+        <rollingFile name="SERVICE" fileName="${LOG_PATH}/swarmbuy_service.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/swarmbuy_service-%d{yyyy-MM-dd-HH}-%i.log">
+            <patternLayout>
+                <Pattern>${pattern}</Pattern>
+            </patternLayout>
+            <Policies>
+                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+        </rollingFile>
+
+
+        <rollingFile name="PROXY" fileName="${LOG_PATH}/swarmbuy_proxy.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/swarmbuy_proxy-%d{yyyy-MM-dd-HH}-%i.log">
+            <patternLayout>
+                <Pattern>${pattern}</Pattern>
+            </patternLayout>
+            <Policies>
+                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+        </rollingFile>
+
+
+        <rollingFile name="PROTOCOL" fileName="${LOG_PATH}/swarmbuy_protocol.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/swarmbuy_protocol-%d{yyyy-MM-dd-HH}-%i.log">
+            <patternLayout>
+                <Pattern>${pattern}</Pattern>
+            </patternLayout>
+            <Policies>
+                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+        </rollingFile>
+
+        <rollingFile name="DAO" fileName="${LOG_PATH}/swarmbuy_dao.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/swarmbuy_dao-%d{yyyy-MM-dd-HH}-%i.log">
+            <patternLayout>
+                <Pattern>${pattern}</Pattern>
+            </patternLayout>
+            <Policies>
+                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+        </rollingFile>
+
+
+    </appenders>
+
+
+
+
+    <!--Loggers节点，常见的有两种:Root和Logger.-->
+ <loggers>
+
+        <logger name="com.inotee.swarmbuy.service" additivity="true">
+            <appender-ref ref="SERVICE"/>
+        </logger>
+
+        <logger name="com.inotee.swarmbuy.mapper" additivity="true" level="DEBUG">
+            <appender-ref ref="DAO"/>
+        </logger>
+
+        <logger name="com.jd.customization.center.service.protocol" additivity="true" level="INFO">
+            <appender-ref ref="PROTOCOL"/>
+        </logger>
+
+        <!--<logger name="com.jd.customization.center.service.proxy" additivity="true" level="INFO">
+            <appender-ref ref="PROXY"/>
+        </logger>
+
+        <logger name="jfs_webservice_invoke_aspect" additivity="true" level="DEBUG">
+            <appender-ref ref="JFS_WEBSERVICE_INVOKE_ASPECT_LOG"/>
+        </logger>
+        
+        <logger name="customization_center_audit_log" additivity="true" level="ERROR">
+            <appender-ref ref="CUSTOMIZATION_CENTER_AUDIT_LOG"/>
+        </logger>
+
+        <logger name="jfs_open_api_invoke_aspect" additivity="true" level="DEBUG">
+            <appender-ref ref="JFS_OPEN_API_INVOKE_ASPECT"/>
+        </logger>-->
+
+        <!--    Root节点用来指定项目的根日志，如果没有单独指定Logger，那么就会默认使用该Root日志输出
+                level:日志输出级别，共有8个级别，按照从低到高为：All < Trace < Debug < Info < Warn < Error < Fatal < OFF.
+                AppenderRef：Root的子节点，用来指定该日志输出到哪个Appender.
+                -->
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="ERROR"/>
+        </root>
+
+    </loggers>
+</configuration>

@@ -1,0 +1,85 @@
+spring:
+  thymeleaf:
+    cache: false # 开发时关闭缓存,不然没法看到实时页面
+    mode: HTML5 # 用非严格的 HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    prefix: classpath:/templates/
+    check-template-location: true
+    suffix: .html
+  resources:
+    static-locations: classpath:/static/, classpath:/templates/
+    add-mappings: true
+    cache:
+      period: 3600
+    chain:
+      cache: true
+      enabled: true
+      html-application-cache: true
+
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://117.78.10.193:3306/swarmbuy?useUnicode=true&characterEncoding=utf8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 连接池配置 ,
+      # 配置初始化大小、最小、最大
+      initial-size: 100
+      min-idle: 10
+      max-active: 1000
+      # 配置获取连接等待超时的时间
+      max-wait: 3000
+      validation-query: SELECT 1 FROM DUAL
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      pool-prepared-statements: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      filters: stat,wall,slf4j
+      # 配置web监控,默认配置也和下面相同(除用户名密码，enabled默认false外)，其他可以不配
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: admin
+        login-password: root
+        allow: 127.0.0.1
+  redis:
+    host: 117.78.10.193
+    port: 6379
+    password: 123456
+  rabbitmq:
+    host: 117.78.10.193
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    listener:
+      simple:
+        concurrency: 10
+        max-concurrency: 10
+        prefetch: 1
+        auto-startup: true
+        default-requeue-rejected: true
+    template:
+      retry:
+        enabled: true
+        initial-interval: 1000
+        max-attempts: 3
+        max-interval: 10000
+        multiplier: 1.0
+mybatis:
+  type-aliases-package: com.inotee.swarmbuy.entity,com.inotee.swarmbuy.vo   #项目中实体类包路径
+  mapper-locations: classpath:mapper/*.xml
+
+
+
+
+

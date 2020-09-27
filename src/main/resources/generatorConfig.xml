@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <!--指定特定数据库的jdbc驱动jar包的位置-->
+    <!--<classPathEntry location="D:\develop\maven_repository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar"/>-->
+
+    <context id="swarmbuyTables" targetRuntime="MyBatis3">
+
+        <!-- *** *** *** 插件扩展 *** *** *** -->
+
+        <!-- 批量插入插件 按需启用-->
+        <plugin type="com.itfsw.mybatis.generator.plugins.BatchInsertPlugin">
+            <property name="allowMultiQueries" value="false"/>
+        </plugin>
+        <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin"/>
+
+
+        <!--覆盖生成XML文件-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
+
+        <!--count方法返回int-->
+        <!--<plugin type="com.itfsw.mybatis.generator.plugins.CountReturnTypePlugin">
+            <property name="returnType" value="int"/>
+        </plugin>-->
+
+        <!-- 查询单条数据插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.SelectOneByExamplePlugin"/>
+
+        <!-- MySQL分页插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.LimitPlugin">
+            <!-- 通过配置startPage影响Example中的page方法开始分页的页码，默认分页从0开始 -->
+            <property name="startPage" value="1"/>
+        </plugin>
+
+        <!-- 自定义注释插件 -->
+        <!--<plugin type="com.itfsw.mybatis.generator.plugins.CommentPlugin">
+            自定义模板路径
+       <property name="template" value="src/main/resources/mybatis-generator-comment.ftl" />
+   </plugin> -->
+
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+
+
+
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+
+        <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://117.78.10.193:3306/swarmbuy?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false"
+                        userId="root"
+                        password="123456">
+            <!--是否去除同名表-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+
+        <!-- java类型解析 -->
+        <!-- 默认false，
+            为false把JDBC DECIMAL 和 NUMERIC 类型解析为Integer，
+            为 true把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal -->
+        <!--<javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>-->
+
+
+        <!-- bean 信息 -->
+        <!-- javaModelGenerator javaBean生成的配置信息
+             targetProject:生成PO类的位置
+             targetPackage：生成PO类的类名-->
+        <javaModelGenerator targetPackage="com.inotee.swarmbuy.entity"
+                            targetProject="src/main/java">
+
+            <!-- enableSubPackages:是否允许子包,是否让schema作为包的后缀
+                 即targetPackage.schemaName.tableName -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 从数据库返回的值是否清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+
+        <!-- mapper.xml 配置 -->
+        <!-- sqlMapGenerator Mapper映射文件的配置信息
+            targetProject:mapper映射文件生成的位置
+            targetPackage:生成mapper映射文件放在哪个包下-->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+
+        <!-- mapper 接口 配置 -->
+        <!--
+           javaClientGenerator 生成 mapper接口
+           targetProject:mapper接口生成的位置
+           targetPackage:生成mapper接口放在哪个包下
+        -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.inotee.swarmbuy.mapper"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+
+        <!-- 指定数据库表 -->
+        <!-- 指定数据库表，要生成哪些表，就写哪些表，要和数据库中对应，不能写错！ -->
+        <!--                <table  tableName="j13_user_t"
+                               enableCountByExample="false"
+                               enableUpdateByExample="false"
+                               enableDeleteByExample="false"
+                               enableSelectByExample="false"
+                               enableInsert="true"
+                               enableDeleteByPrimaryKey="true"
+                               enableSelectByPrimaryKey="true"
+                               selectByExampleQueryId="false"
+                               domainObjectName="User"
+                       > </table> -->
+
+        <!--                 <table tableName="j13_student_t" domainObjectName="Student"/>
+                        <table tableName="j13_teacher_t" domainObjectName="Teacher"/> -->
+
+        <table schema="swarmbuy" tableName="miaosha_user">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table schema="swarmbuy" tableName="goods">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table schema="swarmbuy" tableName="miaosha_goods">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table schema="swarmbuy" tableName="miaosha_order">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+        <table schema="swarmbuy" tableName="order_info">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+
+
+
+        <!-- 有些表的字段需要指定java类型
+         <table schema="" tableName="">
+            <columnOverride column="" javaType="" />
+        </table> -->
+
+
+    </context>
+
+</generatorConfiguration>
