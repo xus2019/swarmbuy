@@ -1,5 +1,6 @@
 package com.inotee.swarmbuy.controller;
 
+import com.inotee.swarmbuy.common.access.AccessLimit;
 import com.inotee.swarmbuy.common.rabbitmq.MQSender;
 import com.inotee.swarmbuy.common.rabbitmq.MiaoshaMessage;
 import com.inotee.swarmbuy.common.util.RedisUtil;
@@ -152,7 +153,7 @@ public class MiaoshaController implements InitializingBean {
      *  同时在该请求中也会验证图形验证码码是否正确
 
      */
-
+    @AccessLimit(seconds=5, maxCount=5, needLogin=true)
     @RequestMapping(value = "/path", method = RequestMethod.GET)
     @ResponseBody
     public Result<String> getMiaoshaPath(HttpServletRequest request, MiaoshaUser user,
