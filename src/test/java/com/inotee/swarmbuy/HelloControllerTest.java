@@ -16,7 +16,6 @@ class HelloControllerTest {
     DataSource dataSource;
 
 
-
     @Test
     void contextLoads() throws SQLException {
         System.out.println(dataSource.getClass());
