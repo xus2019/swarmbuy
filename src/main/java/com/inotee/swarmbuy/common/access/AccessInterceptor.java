@@ -21,8 +21,6 @@ import java.io.OutputStream;
 /**
  * @author : iNotee
  * @date : 2020-10-07
- * /**
- * 自定义拦截器
  **/
 @Service
 public class AccessInterceptor extends HandlerInterceptorAdapter {
@@ -34,16 +32,15 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     RedisUtil redisUtil;
 
 
+    //------------------限流防刷---------------------
+    //判断要访问的接口是否包含@AccessLimit注解 ， 如果不包含，直接返回true
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (handler instanceof HandlerMethod) {
-
             //获取用户信息并设置到UserContext中
+
             MiaoshaUser user = this.getUser(request, response);
             UserContext.setUser(user);
-
-            //------------------限流防刷---------------------
-            //判断要访问的接口是否包含@AccessLimit注解 ， 如果不包含，直接返回true
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             AccessLimit accessLimit = handlerMethod.getMethodAnnotation(AccessLimit.class);
             if (accessLimit == null) {
@@ -114,3 +111,4 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
         return null;
     }
 }
+

@@ -111,7 +111,7 @@ public class MiaoshaServiceImpl implements MiaoshaService {
         // generate a random code
         String verifyCode = generateVerifyCode(rdm);
         g.setColor(new Color(0, 100, 0));
-        g.setFont(new Font("Candara", Font.BOLD, 24));
+        g.setFont(new Font("Candara", Font.BOLD, 18));
         g.drawString(verifyCode, 8, 24);
         g.dispose();
         //把验证码存到redis中

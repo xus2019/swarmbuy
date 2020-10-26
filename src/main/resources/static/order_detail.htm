@@ -17,44 +17,65 @@
     <script type="text/javascript" src="/js/md5.min.js"></script>
     <!-- common.js -->
     <script type="text/javascript" src="/js/common.js"></script>
+    <style>
+       html {
+          height: 100%;
+       }
+       body {
+          height: 100%;
+          overflow: hidden;
+          background-color: #99ccff;
+       }
+       #order-detail {
+         background-color:white;
+            width: 95%;
+            margin: 2% auto;
+            box-shadow: #888888 0px 0px 10px;
+            border-radius: 10px;
+            padding: 2%;          
+       }
+       #head-font{
+            font-size: 18px;
+        }
+        td {
+            padding:1%;
+            vertical-align: middle !important;
+        }
+    </style>
 </head>
 <body>
-<div class="panel panel-default">
-  <div class="panel-heading">秒杀订单详情</div>
+<div id="order-detail" class="panel panel-default">
+  <div class="panel-heading" id="head-font">秒杀订单详情</div>
   <table class="table" id="goodslist">
-        <tr>  
-        <td>商品名称</td>  
-        <td colspan="3" id="goodsName"></td> 
-     </tr>  
+      <tr>
+         <td>收货人</td>  
+         <td colspan="2" style="font-weight: bold;">XXX  18812341234</td>  
+      </tr>
+      <tr>
+         <td>收货地址</td>  
+         <td colspan="2" style="font-weight: bold;">北京市昌平区回龙观龙博一区</td>  
+      </tr>
      <tr>  
-        <td>商品图片</td>  
-        <td colspan="2"><img  id="goodsImg" width="200" height="200" /></td>  
-     </tr>
-      <tr>  
-        <td>订单价格</td>  
-        <td colspan="2"  id="orderPrice"></td>  
+        <td>商品信息</td>  
+        <td colspan="2"><img  id="goodsImg" width="100" height="100" />  &nbsp;&nbsp;<span id="goodsName"></span></td>  
+        <!-- <td colspan="3" id="goodsName"></td>  -->
      </tr>
      <tr>
      		<td>下单时间</td>  
-        	<td id="createDate" colspan="2"></td>  
+        	<td id="createDate" colspan="2" style="font-size: 2%;"></td>  
      </tr>
      <tr>
-     	<td>订单状态</td>  
-        <td id="orderStatus">
-        </td>  
-        <td>
-        	<button class="btn btn-primary btn-block" type="submit" id="payButton">立即支付</button>
-        </td>
+     	   <td >订单状态</td>  
+         <td id="orderStatus" style="font-weight: bold;"></td>  
      </tr>
-      <tr>
-     		<td>收货人</td>  
-        	<td colspan="2">XXX  18812341234</td>  
-     </tr>
-     <tr>
-     		<td>收货地址</td>  
-        	<td colspan="2">北京市昌平区回龙观龙博一区</td>  
-     </tr>
+     <tr>  
+      <td>订单价格</td>  
+      <td colspan="2"  id="orderPrice" style="font-weight: bold;"></td>  
+   </tr>
   </table>
+  <div style="width:10%; margin-top:2%; margin-left: 90%;">
+   <button class="btn btn-primary btn-block" type="submit" id="payButton">立即支付</button>
+  </div>
 </div>
 </body>
 </html>
@@ -64,7 +85,7 @@ function render(detail){
 	var order = detail.order;
 	$("#goodsName").text(goods.goodsName);
 	$("#goodsImg").attr("src", goods.goodsImg);
-	$("#orderPrice").text(order.goodsPrice);
+	$("#orderPrice").text("￥"+order.goodsPrice);
 	$("#createDate").text(new Date(order.createDate).format("yyyy-MM-dd hh:mm:ss"));
 	var status = "";
 	if(order.status == 0){

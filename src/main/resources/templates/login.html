@@ -18,44 +18,81 @@
     <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
     <!-- common.js -->
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
-    
+    <style>
+		html {
+			height: 100%;
+		}
+		body {
+			height: 100%;
+			width: 100%;
+			overflow: hidden;
+		}
+		.login-div {
+			height:80%;
+			width: 100%;
+			background-color: 	#99CCFF;
+			margin-top: 4% !important;
+		}
+		#loginForm {
+			width:25%;
+			height: 75%;
+			margin-top: 3.5%;
+			float: right;
+			margin-right: 15%;
+			background-color: white;
+			border-radius: 2%;
+			box-shadow: #888888 0px 0px 10px;
+		}
+		.div-change {
+			margin-left: 6%;
+			margin-right: -1%;
+		}
+		.login-button {
+			margin-top: 5%;
+			margin-left: 1%;
+		}
+		.foot-div {
+			text-align: center;
+			padding-top:2%;
+		}
+	</style>
 </head>
 <body>
+	<div class="login-div">
+		<form name="loginForm" id="loginForm" method="post">
 
-<form name="loginForm" id="loginForm" method="post"  style="width:50%; margin:0 auto">
-
-	<h2 style="text-align:center; margin-bottom: 20px">用户登录</h2>
-	
-	<div class="form-group">
-       	<div class="row">
-	       	<label class="form-label col-md-4">请输入手机号码</label>
-	        <div class="col-md-5">
-	        	<input id="mobile" name = "mobile" class="form-control" type="text" placeholder="手机号码" required="true"  minlength="11" maxlength="11" />
-	    	</div>
-	    	<div class="col-md-1">
-	    	</div>
-    	</div>
-    </div>
-    
-    <div class="form-group">
-     		<div class="row">
-		        <label class="form-label col-md-4">请输入密码</label>
-		        <div class="col-md-5">
-		        	<input id="password" name="password" class="form-control" type="password"  placeholder="密码" required="true" minlength="6" maxlength="16" />
-	       		</div>
-      		</div>
+			<h4 style="text-align:center; margin-bottom: 10% ;margin-top:10%; font-weight: bold;">账户登录</h4>
+			
+			<div class="form-group" id="phone">
+				<div class="row div-change">
+					<label class="form-label col-md-1" style="padding-top:1%"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></label>
+					<div class="col-md-10">
+						<input id="mobile" name = "mobile" class="form-control" type="text" placeholder="请输入手机号码" required="true"  minlength="11" maxlength="11" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group" id="password-div">
+				<div class="row div-change">
+					<label class="form-label col-md-1"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></label>
+					<div class="col-md-10">
+						<input id="password" name="password" class="form-control" type="password"  placeholder="请输入密码" required="true" minlength="6" maxlength="16" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="row div-change">
+				<div class="col-md-11 login-button">
+					<button class="btn btn-primary btn-block" type="submit" onclick="login()">登录</button>
+				</div>
+				<div class="col-md-11 login-button">
+					<button class="btn btn-primary btn-block" type="reset" onclick="reset()">重置</button>
+				</div>
+			</div>
+			<div style="text-align: center;margin-top: 7%; font-style:italic">测试账号：18912341234  密码：123456</div>
+		</form>
 	</div>
-	
-	<div class="row">
-		     	<div class="col-md-5">
-	       	 		<button class="btn btn-primary btn-block" type="reset" onclick="reset()">重置</button>
-	       	 	</div>
-	       	 	<div class="col-md-5">
-	       	 		<button class="btn btn-primary btn-block" type="submit" onclick="login()">登录</button>
-	       	 	</div>
-	 </div>
-	 
-</form>
+	<div class="foot-div">Copyright©2020 inotee-swarmbuy 版权所有</div>
 </body>
 <script>
 function login(){
