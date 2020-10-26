@@ -34,7 +34,6 @@ public class LoginController{
     @ResponseBody
     public Result<Boolean> loginRequest(HttpServletResponse response , @Valid LoginVo loginVo){
         log.info(JSON.toJSONString(loginVo));
-        //补充参数校验逻辑
         loginService.loginRequest(response,loginVo);
         return Result.success(true);
     }

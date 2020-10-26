@@ -23,12 +23,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+
 @Slf4j
 @Controller
 @RequestMapping("/goods")
 public class GoodsController {
 
-    private final long htmlCacheTime= 60 * 60 * 12;
+    private final long htmlCacheTime = 60 * 60 * 12;
 
     @Resource
     GoodsService goodsService;
@@ -69,7 +70,7 @@ public class GoodsController {
         WebContext webContext = new WebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap());
         html = thymeleafViewResolver.getTemplateEngine().process("goods_list", webContext);
         if (!StringUtils.isEmpty(html)) {
-            redisUtil.set("html:goodsList", html,htmlCacheTime);
+            redisUtil.set("html:goodsList", html, htmlCacheTime);
         }
         return html;
     }
@@ -82,7 +83,7 @@ public class GoodsController {
     @RequestMapping(value = "/to_detail2/{goodsId}", produces = "text/html")
     @ResponseBody
     public String detail2(Model model, MiaoshaUser user, @PathVariable("goodsId") long goodsId,
-                         HttpServletRequest request, HttpServletResponse response) {
+                          HttpServletRequest request, HttpServletResponse response) {
         model.addAttribute("user", user);
 
         //取缓存
@@ -117,7 +118,7 @@ public class GoodsController {
         WebContext webContext = new WebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap());
         html = thymeleafViewResolver.getTemplateEngine().process("goods_detail", webContext);
         if (!StringUtils.isEmpty(html)) {
-            redisUtil.set("goodsDetail" + goodsId, html,htmlCacheTime);
+            redisUtil.set("goodsDetail" + goodsId, html, htmlCacheTime);
         }
         return html;
     }
@@ -129,7 +130,7 @@ public class GoodsController {
      */
     @RequestMapping(value = "/detail/{goodsId}")
     @ResponseBody
-    public Result<GoodsDetailVo> detail(MiaoshaUser user,@PathVariable("goodsId")long goodsId) {
+    public Result<GoodsDetailVo> detail(MiaoshaUser user, @PathVariable("goodsId") long goodsId) {
 
         GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
         long startAt = goods.getStartDate().getTime();
@@ -149,16 +150,12 @@ public class GoodsController {
             remainSeconds = 0;
         }
 
-        /* builder是使用类名去写
-        GoodsDetailVo vo = new GoodsDetailVo();
-        vo.builder()
+        GoodsDetailVo build = GoodsDetailVo.builder()
                 .goods(goods)
                 .user(user)
                 .remainSeconds(remainSeconds)
                 .miaoshaStatus(miaoshaStatus)
-                .build();*/
-
-        GoodsDetailVo build = GoodsDetailVo.builder().goods(goods).user(user).remainSeconds(remainSeconds).miaoshaStatus(miaoshaStatus).build();
+                .build();
         log.info(JSON.toJSONString(build));
         return Result.success(build);
     }

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@ControllerAdvice
-@ResponseBody
+@ControllerAdvice  //切面
+@ResponseBody   //
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public Result<String> exceptionHandler(HttpServletRequest request, Exception e) {
@@ -21,7 +21,6 @@ public class GlobalExceptionHandler {
             GlobalException ex = (GlobalException) e;
             return Result.error(ex.getCm());
         }
-
         else if (e instanceof BindException) {
             BindException ex = (BindException) e;
             List<ObjectError> errors = ex.getAllErrors();

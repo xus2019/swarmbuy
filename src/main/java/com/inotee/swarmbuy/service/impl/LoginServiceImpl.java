@@ -37,52 +37,6 @@ public class LoginServiceImpl implements LoginService {
 
     public static final Integer TOKEN_EXPIRE = 3600*24 *2;
 
-    /**
-     * @param:
-     * @return:
-     * @Description: 对象缓存
-     */
-    public MiaoshaUser getById(long id) {
-        //取缓存
-        MiaoshaUser user= (MiaoshaUser) redisUtil.get("user:"+id);
-        if(user!=null){
-           return user;
-        }
-        //取不到再去db
-        MiaoshaUserExample example = new MiaoshaUserExample();
-        example.createCriteria().andIdEqualTo(id);
-        List<MiaoshaUser> miaoshaUsers = userMapper.selectByExample(example);
-
-        //存缓存
-        if(!CollectionUtils.isEmpty(miaoshaUsers)){
-            MiaoshaUser miaoshaUser = miaoshaUsers.get(0);
-            redisUtil.set("user:"+id,miaoshaUser);
-            return miaoshaUser;
-        }
-        return null;
-    }
-
-    //如果使用了缓存，更新db数据的时候一定要记得更新缓存
-    public boolean updatePassword(long id,String formPass,String token){
-        MiaoshaUser user = getById(id);
-        if(user == null) {
-            throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
-        }
-        //更新数据库
-        MiaoshaUserExample example = new MiaoshaUserExample();
-        example.createCriteria().andIdEqualTo(id);
-        MiaoshaUser record = new MiaoshaUser();
-        String newPassword = MD5Util.formPassToDBPass(formPass, user.getSalt());
-        record.setPassword(newPassword);
-        userMapper.updateByExampleSelective(record,example);
-
-        //处理缓存：删除旧缓存，更新缓存
-        redisUtil.del("user:"+id);
-        user.setPassword(newPassword);
-        redisUtil.set(token,user);
-        return true;
-    }
-
 
     @Override
     public Boolean loginRequest(HttpServletResponse response, LoginVo loginVo) {
@@ -132,6 +86,52 @@ public class LoginServiceImpl implements LoginService {
         cookie.setMaxAge(TOKEN_EXPIRE);
         cookie.setPath("/");
         response.addCookie(cookie);
+    }
+
+    /**
+     * @param:
+     * @return:
+     * @Description: 对象缓存
+     */
+    public MiaoshaUser getById(long id) {
+        //取缓存
+        MiaoshaUser user= (MiaoshaUser) redisUtil.get("user:"+id);
+        if(user!=null){
+            return user;
+        }
+        //取不到再去db
+        MiaoshaUserExample example = new MiaoshaUserExample();
+        example.createCriteria().andIdEqualTo(id);
+        List<MiaoshaUser> miaoshaUsers = userMapper.selectByExample(example);
+
+        //存缓存
+        if(!CollectionUtils.isEmpty(miaoshaUsers)){
+            MiaoshaUser miaoshaUser = miaoshaUsers.get(0);
+            redisUtil.set("user:"+id,miaoshaUser);
+            return miaoshaUser;
+        }
+        return null;
+    }
+
+    //如果使用了缓存，更新db数据的时候一定要记得更新缓存
+    public boolean updatePassword(long id,String formPass,String token){
+        MiaoshaUser user = getById(id);
+        if(user == null) {
+            throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
+        }
+        //更新数据库
+        MiaoshaUserExample example = new MiaoshaUserExample();
+        example.createCriteria().andIdEqualTo(id);
+        MiaoshaUser record = new MiaoshaUser();
+        String newPassword = MD5Util.formPassToDBPass(formPass, user.getSalt());
+        record.setPassword(newPassword);
+        userMapper.updateByExampleSelective(record,example);
+
+        //处理缓存：删除旧缓存，更新缓存
+        redisUtil.del("user:"+id);
+        user.setPassword(newPassword);
+        redisUtil.set(token,user);
+        return true;
     }
 
 }

@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
  **/
 @Data
 public class LoginVo {
-
     @NotNull
     @IsMobile
     private String mobile;
