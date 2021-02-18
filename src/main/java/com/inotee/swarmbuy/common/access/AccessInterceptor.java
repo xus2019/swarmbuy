@@ -38,7 +38,6 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (handler instanceof HandlerMethod) {
             //获取用户信息并设置到UserContext中
-
             MiaoshaUser user = this.getUser(request, response);
             UserContext.setUser(user);
             HandlerMethod handlerMethod = (HandlerMethod) handler;

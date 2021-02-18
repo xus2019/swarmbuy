@@ -4,7 +4,7 @@ import com.inotee.swarmbuy.entity.MiaoshaGoods;
 import org.apache.ibatis.annotations.Update;
 
 /**
- * @Auther: xushuai56
+ * @Auther: inotee
  * @Date: 2020/9/6 17:48
  * @Description:
  */

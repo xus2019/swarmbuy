@@ -4,7 +4,7 @@ import com.inotee.swarmbuy.entity.MiaoshaUser;
 import lombok.*;
 
 /**
- * @Auther: xushuai56
+ * @Auther: inotee
  * @Date: 2020/9/4 16:20
  * @Description:
  */

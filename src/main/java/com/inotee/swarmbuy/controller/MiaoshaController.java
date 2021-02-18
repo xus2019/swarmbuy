@@ -151,7 +151,6 @@ public class MiaoshaController implements InitializingBean {
      * 秒杀请求验证path正确后才会进行秒杀流程
      *
      *  同时在该请求中也会验证图形验证码码是否正确
-
      */
     @AccessLimit(seconds=5, maxCount=5, needLogin=true)
     @RequestMapping(value = "/path", method = RequestMethod.GET)
@@ -162,6 +161,7 @@ public class MiaoshaController implements InitializingBean {
         if (user == null) {
             return Result.error(CodeMsg.SESSION_ERROR);
         }
+        //获取秒杀path之前，判断验证码是否正确
         boolean check = miaoshaService.checkVerifyCode(user, goodsId, verifyCode);
         if (!check) {
             return Result.error(CodeMsg.REQUEST_ILLEGAL);

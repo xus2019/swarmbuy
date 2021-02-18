@@ -49,7 +49,7 @@ public class GoodsController {
      *
      * @param: QPS ： 289
      * @return: 请求数： 5000 * 10
-     * @auther: xushuai56
+     * @auther: inotee
      * @date: 2020/9/3 10:08
      */
     @RequestMapping(value = "/to_list", produces = "text/html")

@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @Slf4j
 @Controller
 @RequestMapping("/login")
-public class LoginController{
+public class LoginController {
 
     @Resource
     LoginService loginService;
@@ -32,9 +32,9 @@ public class LoginController{
 
     @RequestMapping("/do_login")
     @ResponseBody
-    public Result<Boolean> loginRequest(HttpServletResponse response , @Valid LoginVo loginVo){
+    public Result<Boolean> loginRequest(HttpServletResponse response, @Valid LoginVo loginVo) {
         log.info(JSON.toJSONString(loginVo));
-        loginService.loginRequest(response,loginVo);
+        loginService.loginRequest(response, loginVo);
         return Result.success(true);
     }
 
@@ -47,3 +47,14 @@ public class LoginController{
         return Result.success(token);
     }*/
 }
+
+
+
+
+
+
+
+
+
+
+

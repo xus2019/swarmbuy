@@ -9,9 +9,12 @@ import org.springframework.amqp.core.MessageProperties;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 /**
- * @Auther: xushuai56
+ * @Auther: inotee
  * @Date: 2020/9/7 19:56
  * @Description:
  */
@@ -31,6 +34,7 @@ public class MQSender {
         log.info("-----sen message:" + messages);
         amqpTemplate.convertAndSend(MQConfig.MIAOSHA_QUEUE,messages);
 
+        
     }
 
     public void sendMessage(Object message){
