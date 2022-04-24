@@ -4,6 +4,9 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * change test
+ */
 @MapperScan("com.inotee.swarmbuy.mapper")
 @SpringBootApplication
 public class SwarmbuyApplication /*extends SpringBootServletInitializer*/ {
